@@ -1,0 +1,17 @@
+<a href="#"
+   class="list-group-item card-body  recipe-card"
+   (click)="selectedRecipe.emit()"
+>
+  <div>
+    <h4 class="card-title">
+      {{recipe.name}}
+    </h4>
+    <p class="card-text">{{recipe.description}}</p>
+  </div>
+  <span>
+    <img [src]="recipe.imagePath"
+         alt="{{recipe.name}}"
+         class=" card-img" />
+  </span>
+</a>
+

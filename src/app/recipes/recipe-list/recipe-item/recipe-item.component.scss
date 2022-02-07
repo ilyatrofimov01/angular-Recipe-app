@@ -1,0 +1,11 @@
+.recipe-card{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  &:hover {
+    color: #566573;
+  }
+  img {
+    max-height: 100px;
+  }
+}
