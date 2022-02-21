@@ -9,7 +9,6 @@
      *ngFor="let recipeEl of recipes">
       <app-recipe-item
         [recipe]="recipeEl"
-        (selectedRecipe)="wasSelectedRecipe.emit(recipeEl)"
       ></app-recipe-item>
   </div>
 </div>
