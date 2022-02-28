@@ -1,6 +1,7 @@
-<a href="#"
-   class="list-group-item card-body  recipe-card"
-   (click)="onSelect()"
+<div
+   class="list-group-item card-body recipe-card"
+   [routerLink]= "[recipe.id]"
+   routerLinkActive="active"
 >
   <div>
     <h4 class="card-title">
@@ -13,5 +14,5 @@
          alt="{{recipe.name}}"
          class=" card-img" />
   </span>
-</a>
+</div>
 

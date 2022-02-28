@@ -8,10 +8,5 @@ import { Component, EventEmitter, Output } from "@angular/core";
 
 export class HeaderComponent{
 
-  @Output() selectedView = new EventEmitter<string>()
-
-  onSelect(selected: string){
-    this.selectedView.emit(selected)
-  }
 }
 

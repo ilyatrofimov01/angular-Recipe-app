@@ -1,5 +1,19 @@
+.navbar{
+  a{
+    cursor: pointer;
+  }
+}
 .navbar-container{
   display: flex;
   justify-content: space-between;
   padding-right: 32px;
+}
+.nav-link{
+  &.active{
+    background-color:darkgray;
+    border-radius: 4px;
+  }
+}
+.navbar-brand{
+  padding: 8px;
 }

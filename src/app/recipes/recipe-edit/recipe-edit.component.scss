@@ -1,0 +1,32 @@
+.edit-recipe{
+  &__container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px;
+    margin-top: 40px;
+  }
+  &__form-header{
+   h3 {
+     font-size: 1.25rem;
+   }
+  }
+  &__form-body{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 20px;
+    padding: 20px 0;
+  }
+}
+.forms{
+  &:nth-child(odd){
+    margin-right: 10%;
+  }
+  &__name{
+    width: 40%;
+    margin-right: 60%!important;
+  }
+}
+

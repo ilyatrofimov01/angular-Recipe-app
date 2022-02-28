@@ -1,0 +1,18 @@
+<div class="edit-recipe__container bg-light">
+  <div class="edit-recipe__form-header">
+    <div
+      *ngIf="this.editMode; else createNewTitle">
+      <h3> What you want to change? </h3>
+    </div>
+    <ng-template #createNewTitle>
+      <h3>Fill all fields to create new Recipe</h3>
+    </ng-template>
+  </div>
+  <div class="edit-recipe__form-body">
+    <div class="forms forms__name">
+      <label for="input_name">Input recipe name:</label>
+      <input class="form-control" type="text" id="input_name" (change)="this.newName = $event.target.value">
+    </div>
+
+  </div>
+</div>

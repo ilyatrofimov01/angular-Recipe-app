@@ -7,9 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  loadedNav: string = "recipes"
-
-  onNavigate(nav: string) {
-    this.loadedNav = nav
-  }
 }
