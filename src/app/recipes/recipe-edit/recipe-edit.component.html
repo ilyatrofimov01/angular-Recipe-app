@@ -8,11 +8,49 @@
       <h3>Fill all fields to create new Recipe</h3>
     </ng-template>
   </div>
-  <div class="edit-recipe__form-body">
+  <form class="edit-recipe__form-body" (ngSubmit)="onSubmitForm()" #form="ngForm">
     <div class="forms forms__name">
-      <label for="input_name">Input recipe name:</label>
-      <input class="form-control" type="text" id="input_name" (change)="this.newName = $event.target.value">
+      <label for="recipe-name">Input recipe name:</label>
+      <input class="form-control"
+             id="recipe-name"
+             name="recipe-name"
+             ngModel
+             required
+             email
+             #email="ngModel"
+      >
+      <span *ngIf="!email.valid && email.touched" class="input-help-block">Please enter a valid value!</span>
     </div>
 
-  </div>
+    <div class="form-group">
+      <label for="select">
+        Select your variant
+      </label>
+      <select name="select"
+              id="select"
+              class="form-control"
+              [ngModel]="'pet'"
+      >
+        <option value="pet">
+          What is your favorite pet?
+        </option>
+        <option value="teacher">
+          Who is your teacher ?
+        </option>
+      </select>
+
+    </div>
+
+    <div class="form-group">
+      <textarea class="form-control" name="questionAnswer" rows="3" [(ngModel)]="answer"></textarea>
+      <p>Your reply: {{ answer }}</p>
+    </div>
+
+    <button class="btn btn-success"
+            type="submit"
+            [disabled]="!form.valid"
+    > Submit
+    </button>
+
+  </form>
 </div>

@@ -15,6 +15,7 @@
   &__form-body{
     display: flex;
     justify-content: flex-start;
+    flex-direction: column;
     width: 100%;
     margin-top: 20px;
     padding: 20px 0;
@@ -27,6 +28,12 @@
   &__name{
     width: 40%;
     margin-right: 60%!important;
+  }
+}
+
+.ng-invalid.ng-touched {
+  input{
+    border-color: red;
   }
 }
 

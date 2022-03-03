@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import RecipeService from "../recipe.service";
+import { NgForm } from "@angular/forms";
 
 @Component({
   selector: 'app-recipe-edit',
   templateUrl: './recipe-edit.component.html',
   styleUrls: ['./recipe-edit.component.scss']
 })
-export class RecipeEditComponent implements OnInit {
+export class RecipeEditComponent implements OnInit, OnChanges {
+  @ViewChild('form') editForm : NgForm
 
   id: number
   editMode: boolean = false
-  newName: string
-
+  disableSubmitButton : boolean = true
+  answer: string = ""
 
   constructor(private route: ActivatedRoute, private recipeService : RecipeService) { }
 
@@ -26,6 +28,11 @@ export class RecipeEditComponent implements OnInit {
       }
     })
   }
-
+  ngOnChanges(){
+    this.disableSubmitButton = this.editForm.valid
+  }
+  onSubmitForm(){
+    console.log(this.editForm)
+  }
 
 }
