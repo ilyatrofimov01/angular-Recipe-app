@@ -1,17 +1,19 @@
-.edit-recipe{
-  &__container{
+.edit-recipe {
+  &__container {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     padding: 40px;
   }
-  &__form-header{
-   h3 {
-     font-size: 1.25rem;
-   }
+
+  &__form-header {
+    h3 {
+      font-size: 1.25rem;
+    }
   }
-  &__form-body{
+
+  &__form-body {
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
@@ -20,27 +22,31 @@
     padding: 20px 0;
   }
 }
-.ingredients-list{
+
+.ingredients-list {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 20px;
-  &__name{
+
+  &__name {
     width: 64%;
   }
-  &__amount{
+
+  &__amount {
     width: 15%;
   }
-  &__button{
+
+  &__button {
     width: 11%;
     display: flex;
     justify-content: flex-end;
   }
 }
 
-.ng-invalid.ng-touched {
-  input{
-    border-color: red;
+input, textarea {
+  &.ng-invalid.ng-touched {
+    border: 1px solid red;
   }
 }
 

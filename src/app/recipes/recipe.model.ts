@@ -1,13 +1,5 @@
 import { Ingredient } from "../shared/ingredient.model";
 
-export interface RecipeEdits {
-  id?: number
-  name?: string
-  description?: string
-  imagePath?: string
-  ingredients?: Ingredient[]
-}
-
 export class Recipe {
   public id: number
   public name: string

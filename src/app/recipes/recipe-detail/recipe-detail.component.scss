@@ -1,11 +1,22 @@
-.details-image{
+.details-image {
   display: flex;
   align-items: center;
   justify-content: center;
-  img{
+
+  img {
     max-height: 300px;
   }
 }
-.dropdown-menu a {
-  cursor: pointer;
+
+.dropdown-menu {
+  top: 38px;
+
+  & a {
+    cursor: pointer;
+  }
 }
+
+h2, p {
+  text-align: center;
+}
+

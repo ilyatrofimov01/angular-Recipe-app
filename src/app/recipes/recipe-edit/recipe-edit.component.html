@@ -13,10 +13,12 @@
     <div class="btn-group">
       <button class="btn btn-success"
               type="submit"
+              [disabled]="!recipeForm.valid"
       > Submit
       </button>
       <button class="btn btn-danger"
               type="button"
+              (click)="onCancel()"
       > Cancel
       </button>
     </div>
@@ -37,12 +39,13 @@
                id="imagePath"
                name="imagePath"
                formControlName="imagePath"
+               #imagePath
         >
       </div>
     </div>
 
     <div class="row">
-      <img src="" class="image-responsive">
+      <img [src]="imagePath.value" class="image-responsive">
     </div>
 
     <div class="row">
@@ -58,16 +61,22 @@
       </div>
     </div>
 
-    <div class="ingredients-list">
+    <div formArrayName="ingredients">
+      <div class="row ingredients-list" *ngFor=" let ingredientCtrl of ingredientsFormControls let i = index" [formGroupName]="i">
         <div class="ingredients-list__name">
-          <input type="text" class="form-control name">
+          <input type="text" class="form-control name" formControlName="name">
         </div>
-      <div class="ingredients-list__amount">
-          <input type="number" class="form-control amount">
+        <div class="ingredients-list__amount">
+          <input type="number" class="form-control amount" formControlName="amount">
         </div>
         <div class="ingredients-list__button">
-          <Button class="btn btn-danger"> Delete </Button>
+          <Button class="btn btn-danger" (click)="onDeleteIngredient(i)"> Delete </Button>
         </div>
+      </div>
+      <div class="row" style="margin-top: 20px">
+        <hr>
+        <button class="btn btn-success" type="button" (click)="onAddIngredient()"> Add New </button>
+      </div>
     </div>
 
 
