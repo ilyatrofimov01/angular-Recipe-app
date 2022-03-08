@@ -5,9 +5,9 @@
 >
   <div>
     <h4 class="card-title">
-      {{recipe.name}}
+      {{recipe.name !== "BBQ"? (recipe.name | titlecase) : recipe.name}}
     </h4>
-    <p class="card-text">{{recipe.description | slice:0:50 }}</p>
+    <p class="card-text">{{recipe.description | shortDescription:50 }}</p>
   </div>
   <span>
     <img [src]="recipe.imagePath"

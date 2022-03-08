@@ -6,6 +6,7 @@
         <li class="nav-link"  routerLinkActive="active"><a routerLink="/shopping-list" class="nav-link">Shopping List</a></li>
       </ul>
       <div class="nav navbar-nav">
+        <div class="nav-link" style="color:#0d6efd">{{isDataSaving? 'Wait, data is saving...' : null}}</div>
         <div class="nav-item dropdown" appDropdown>
           <a class="nav-link dropdown-toggle" id="header-dropdown"
              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -14,8 +15,8 @@
             Manage
           </a>
           <div class="dropdown-menu" aria-labelledby="header-dropdown">
-            <a class="dropdown-item">Save Data</a>
-            <a class="dropdown-item">Fetch Data</a>
+            <a class="dropdown-item" (click)="onSaveData()">Save Data</a>
+            <a class="dropdown-item" (click)="onFetchRecipes()">Fetch Data</a>
           </div>
         </div>
       </div>

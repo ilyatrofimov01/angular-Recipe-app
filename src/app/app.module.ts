@@ -17,6 +17,8 @@ import { RecipeStartComponent } from "./recipes/recipe-start/recipe-start.compon
 import { RecipeEditComponent } from "./recipes/recipe-edit/recipe-edit.component";
 import RecipeService from "./recipes/recipe.service";
 import { CommonModule } from "@angular/common";
+import { ShortDescriptionPipe } from "./custom-pipes/short-description.pipe";
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -31,16 +33,18 @@ import { CommonModule } from "@angular/common";
     DropdownDirective,
     NotFoundComponent,
     RecipeStartComponent,
-    RecipeEditComponent
+    RecipeEditComponent,
+    ShortDescriptionPipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    CommonModule
+    CommonModule,
+    HttpClientModule
   ],
-  providers: [ShoppingListService,RecipeService],
+  providers: [ShoppingListService, RecipeService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
