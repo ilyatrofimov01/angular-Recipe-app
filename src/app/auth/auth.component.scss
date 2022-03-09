@@ -1,0 +1,11 @@
+.btn-container{
+  margin-top: 25px;
+  button{
+    margin-right: 25px;
+  }
+}
+input{
+  &.ng-touched.ng-invalid {
+    border: 1px solid red;
+  }
+}

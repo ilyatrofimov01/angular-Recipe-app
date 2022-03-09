@@ -1,0 +1,24 @@
+<div class="d-flex justify-content-center">
+  <div class="col-xs-12">
+    <div *ngIf="isLoading">
+      <app-spinner-component></app-spinner-component>
+    </div>
+    <form [formGroup]="loginForm" (submit)="onSubmit()" *ngIf="!isLoading">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" class="form-control" formControlName="email">
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" class="form-control" formControlName="password">
+      </div>
+      <div class="btn-container">
+        <button class="btn btn-primary" type="submit"
+                [disabled]="!loginForm.valid">{{this.isLoginMode ? "Login" : "Sign Up"}}</button>
+        <button class="btn btn-primary" type="button"
+                (click)="onSwitchMode()">Switch to {{this.isLoginMode ? "Sign Up" : "Login"}}</button>
+      </div>
+    </form>
+  </div>
+</div>
+
