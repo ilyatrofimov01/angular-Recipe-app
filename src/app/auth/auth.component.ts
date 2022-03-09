@@ -11,6 +11,7 @@ export class AuthComponent implements OnInit {
   isLoading: boolean = false;
   isLoginMode: boolean = true;
   loginForm: FormGroup;
+  error: string = null;
 
   constructor(private authService: AuthService) {
   }
@@ -42,7 +43,7 @@ export class AuthComponent implements OnInit {
 
         },
         error: (error) => {
-          console.log("signUpError", error);
+          this.error = error;
           this.isLoading = false;
 
         }

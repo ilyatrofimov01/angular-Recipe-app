@@ -22,12 +22,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthComponent } from "./auth/auth.component";
 import { UnAuthorizedComponent } from './un-authorized/un-authorized.component';
 import { LoadingSpinnerComponent } from "./shared/loading-spinner/loading-spinner.component";
+import { LoadingSpinnerProgressbarComponent } from './shared/loading-spinner-progressbar/loading-spinner-progressbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
     LoadingSpinnerComponent,
+    LoadingSpinnerProgressbarComponent,
     HeaderComponent,
     RecipesComponent,
     RecipeListComponent,
@@ -40,7 +42,8 @@ import { LoadingSpinnerComponent } from "./shared/loading-spinner/loading-spinne
     RecipeStartComponent,
     RecipeEditComponent,
     ShortDescriptionPipe,
-    UnAuthorizedComponent
+    UnAuthorizedComponent,
+    LoadingSpinnerProgressbarComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,8 @@
 <div class="d-flex justify-content-center">
   <div class="col-xs-12">
+    <div class="alert alert-danger" *ngIf="error">
+      <p>You got an Error: {{error}}</p>
+    </div>
     <div *ngIf="isLoading">
       <app-spinner-component></app-spinner-component>
     </div>
