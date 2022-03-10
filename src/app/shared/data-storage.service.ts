@@ -7,15 +7,15 @@ import { Router } from "@angular/router";
 
 @Injectable({providedIn: "root"})
 export class DataStorageService {
-  constructor(private http: HttpClient, private recipeService: RecipeService, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private recipeService: RecipeService,
+    private router: Router) {
   }
-
-  unAuthorizedError: boolean = false;
 
   fetchRecipes() {
     return this.http.get<Recipe[]>("https://angular-recipe-book-9e7c1-default-rtdb.europe-west1.firebasedatabase.app/recipes-list.json")
-      .pipe(
-        map(recipes => {
+      .pipe(map(recipes => {
           return recipes.map(recipe => {
             return {...recipe, ingredients: recipe.ingredients ? recipe.ingredients : []};
           });
@@ -30,13 +30,11 @@ export class DataStorageService {
             console.log("Something went wrong", error);
           }
           return [];
-        })
-      );
+        }));
   }
 
   storeRecipes() {
     const recipes = this.recipeService.getAllRecipes();
-    // firebase always overwrite all data by put request
     return this.http.put("https://angular-recipe-book-9e7c1-default-rtdb.europe-west1.firebasedatabase.app/recipes-list.json", recipes);
   }
 

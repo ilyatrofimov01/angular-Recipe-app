@@ -18,11 +18,12 @@ import { RecipeEditComponent } from "./recipes/recipe-edit/recipe-edit.component
 import RecipeService from "./services/recipe.service";
 import { CommonModule } from "@angular/common";
 import { ShortDescriptionPipe } from "./custom-pipes/short-description.pipe";
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { AuthComponent } from "./auth/auth.component";
-import { UnAuthorizedComponent } from './un-authorized/un-authorized.component';
+import { UnAuthorizedComponent } from "./un-authorized/un-authorized.component";
 import { LoadingSpinnerComponent } from "./shared/loading-spinner/loading-spinner.component";
-import { LoadingSpinnerProgressbarComponent } from './shared/loading-spinner-progressbar/loading-spinner-progressbar.component';
+import { LoadingSpinnerProgressbarComponent } from "./shared/loading-spinner-progressbar/loading-spinner-progressbar.component";
+import { AuthInterceptorService } from "./auth/auth-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -53,7 +54,11 @@ import { LoadingSpinnerProgressbarComponent } from './shared/loading-spinner-pro
     CommonModule,
     HttpClientModule
   ],
-  providers: [ShoppingListService, RecipeService],
+  providers: [ShoppingListService, RecipeService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

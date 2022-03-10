@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { AuthService } from "../services/auth.service";
+import { AuthResponseData, AuthService } from "../services/auth.service";
+import { Observable } from "rxjs";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-auth-component",
@@ -12,8 +14,9 @@ export class AuthComponent implements OnInit {
   isLoginMode: boolean = true;
   loginForm: FormGroup;
   error: string = null;
+  authObs: Observable<AuthResponseData>
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   ngOnInit() {
@@ -30,25 +33,26 @@ export class AuthComponent implements OnInit {
   onSubmit() {
     if (!this.loginForm.valid) return;
     const email = this.loginForm.value.email;
-    const password = this.loginForm.value.email;
+    const password = this.loginForm.value.password;
 
+    this.error = null;
     this.isLoading = true;
     if (this.isLoginMode) {
-      // ...
+      this.authObs = this.authService.signIn({email, password});
     } else {
-      this.authService.signUp({email, password}).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.isLoading = false;
-
-        },
-        error: (error) => {
-          this.error = error;
-          this.isLoading = false;
-
-        }
-      });
+      this.authObs = this.authService.signUp({email, password});
     }
+    this.authObs.subscribe({
+      next: (res) => {
+        this.isLoading = false;
+        console.log(res)
+        this.router.navigate(['/recipes'])
+      },
+      error: (error) => {
+        this.error = error;
+        this.isLoading = false;
+      }
+    })
     this.loginForm.reset();
   }
 }
