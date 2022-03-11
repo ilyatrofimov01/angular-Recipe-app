@@ -24,11 +24,7 @@ export class DataStorageService {
           this.recipeService.setRecipes(recipes);
         }),
         catchError(error => {
-          if (error.status === 401) {
-            this.router.navigate(["unAuthorized"]);
-          } else {
-            console.log("Something went wrong", error);
-          }
+          console.log("Something went wrong", error);
           return [];
         }));
   }
