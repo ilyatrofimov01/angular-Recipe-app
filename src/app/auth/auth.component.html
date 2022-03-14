@@ -1,8 +1,7 @@
+<ng-template appPlaceholder></ng-template>
 <div class="d-flex justify-content-center">
   <div class="col-xs-12">
-    <div class="alert alert-danger" *ngIf="error">
-      <p>{{error}}</p>
-    </div>
+<!--    <app-alert [message]="error" *ngIf="error" (close)="onHandleError()" ></app-alert>-->
     <div *ngIf="isLoading">
       <app-spinner-component></app-spinner-component>
     </div>

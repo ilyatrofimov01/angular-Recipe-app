@@ -24,6 +24,8 @@ import { UnAuthorizedComponent } from "./un-authorized/un-authorized.component";
 import { LoadingSpinnerComponent } from "./shared/loading-spinner/loading-spinner.component";
 import { LoadingSpinnerProgressbarComponent } from "./shared/loading-spinner-progressbar/loading-spinner-progressbar.component";
 import { AuthInterceptorService } from "./auth/auth-interceptor.service";
+import { AlertComponent } from './shared/alert/alert.component';
+import { PlaceholderDirective } from "./shared/placeholder/placeholder.directive";
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { AuthInterceptorService } from "./auth/auth-interceptor.service";
     RecipeEditComponent,
     ShortDescriptionPipe,
     UnAuthorizedComponent,
-    LoadingSpinnerProgressbarComponent
+    LoadingSpinnerProgressbarComponent,
+    AlertComponent,
+    PlaceholderDirective
   ],
   imports: [
     BrowserModule,
