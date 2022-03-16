@@ -5,10 +5,13 @@ import { RecipeDetailComponent } from "./recipe-detail/recipe-detail.component";
 import { RecipeItemComponent } from "./recipe-list/recipe-item/recipe-item.component";
 import { RecipeStartComponent } from "./recipe-start/recipe-start.component";
 import { RecipeEditComponent } from "./recipe-edit/recipe-edit.component";
-import { CommonModule, TitleCasePipe } from "@angular/common";
+import { TitleCasePipe } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { ReactiveFormsModule } from "@angular/forms";
 import { ShortDescriptionPipe } from "../custom-pipes/short-description.pipe";
+import { RecipesRoutingModule } from "./recipes-routing.module";
+import { DropdownDirective } from "../shared/dropdown.directive";
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
   declarations:[
@@ -18,21 +21,17 @@ import { ShortDescriptionPipe } from "../custom-pipes/short-description.pipe";
     RecipeItemComponent,
     RecipeStartComponent,
     RecipeEditComponent,
-    ShortDescriptionPipe
+    ShortDescriptionPipe,
   ],
   imports:[
-    CommonModule,
+    RecipesRoutingModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   exports:[
-    RecipesComponent,
-    RecipeListComponent,
-    RecipeDetailComponent,
-    RecipeItemComponent,
-    RecipeStartComponent,
-    RecipeEditComponent,
-    ShortDescriptionPipe
+    ShortDescriptionPipe,
+    DropdownDirective,
   ],
   providers:[TitleCasePipe]
 })
