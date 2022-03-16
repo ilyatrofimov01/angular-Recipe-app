@@ -11,7 +11,7 @@ import { UnAuthorizedComponent } from "./un-authorized/un-authorized.component";
 import { RecipesModule } from "./recipes/recipes.module";
 import { ShoppingListModule } from "./shopping-list/shopping-list.module";
 import { SharedModule } from "./shared/shared.module";
-import { CoreModule } from "./recipes/core.module";
+import { CoreModule } from "./core.module";
 import { AuthModule } from "./auth/auth.module";
 
 @NgModule({
