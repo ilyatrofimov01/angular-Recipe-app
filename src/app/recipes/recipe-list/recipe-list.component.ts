@@ -3,7 +3,7 @@ import { Recipe } from "../recipe.model";
 import RecipeService from "../../services/recipe.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { DataStorageService } from "../../shared/data-storage.service";
+import { DataStorageService } from "../../services/data-storage.service";
 
 @Component({
   selector: "app-recipe-list",

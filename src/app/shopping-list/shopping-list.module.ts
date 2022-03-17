@@ -6,7 +6,7 @@ import { FormsModule } from "@angular/forms";
 import { SharedModule } from "../shared/shared.module";
 
 const routes: Routes = [
-  {path: "shopping-list", component: ShoppingListComponent}
+  {path: "", component: ShoppingListComponent}
 ];
 
 @NgModule({

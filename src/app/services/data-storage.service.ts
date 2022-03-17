@@ -1,16 +1,12 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import RecipeService from "../services/recipe.service";
+import RecipeService from "./recipe.service";
 import { Recipe } from "../recipes/recipe.model";
 import { catchError, map, tap } from "rxjs";
-import { Router } from "@angular/router";
 
 @Injectable({providedIn: "root"})
 export class DataStorageService {
-  constructor(
-    private http: HttpClient,
-    private recipeService: RecipeService,
-    private router: Router) {
+  constructor(private http: HttpClient, private recipeService: RecipeService) {
   }
 
   fetchRecipes() {
