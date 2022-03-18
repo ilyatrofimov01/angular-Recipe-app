@@ -13,7 +13,6 @@ const appRoutes: Routes = [
   {path: "auth", loadChildren: () => import("./auth/auth.module").then(mod => mod.AuthModule)},
   {path: "not-found", component: NotFoundComponent},
   {path: "unAuthorized", component: UnAuthorizedComponent}
-  //{path: "**", redirectTo: "not-found"}
 ];
 
 @NgModule({
