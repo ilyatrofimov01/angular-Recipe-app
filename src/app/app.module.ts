@@ -1,12 +1,10 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { AppComponent } from "./app.component";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HeaderComponent } from "./header/header.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { AppRoutingModule } from "./app-routing.module";
 import {  HttpClientModule } from "@angular/common/http";
-import { AuthComponent } from "./auth/auth.component";
 import { UnAuthorizedComponent } from "./un-authorized/un-authorized.component";
 import { RecipesModule } from "./recipes/recipes.module";
 import { ShoppingListModule } from "./shopping-list/shopping-list.module";
