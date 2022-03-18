@@ -12,6 +12,7 @@ export class RecipesResolverService implements Resolve<Recipe[]>{
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Recipe[]> | Promise<Recipe[]> | Recipe[] {
     const recipes = this.recipeService.getAllRecipes()
     if (recipes.length !== 0){
+      // add here handler: if remote recipes same with local return local if they are different return new
       return this.dataStorageService.fetchRecipes();
     } else {
       return recipes

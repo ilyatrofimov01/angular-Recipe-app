@@ -1,20 +1,20 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light p-2">
   <a routerLink="/" class="navbar-brand">Recipe Book</a>
-  <div class="collapse navbar-collapse navbar-container">
+  <div class="collapse navbar-collapse navbar__container">
     <ul class="nav navbar-nav">
-      <li class="nav-link" routerLinkActive="active"><a routerLink="/recipes" class="nav-link" *ngIf="isAuthenticated">Recipes</a></li>
-      <li class="nav-link" routerLinkActive="active"><a routerLink="/auth" class="nav-link" *ngIf="!isAuthenticated">Authenticate</a></li>
-      <li class="nav-link" routerLinkActive="active"><a routerLink="/shopping-list" class="nav-link">Shopping List</a>
+      <li class="nav-link header-controls" routerLinkActive="active" *ngIf="isAuthenticated"><a routerLink="/recipes" class="nav-link">Recipes</a></li>
+      <li class="nav-link header-controls" routerLinkActive="active" *ngIf="!isAuthenticated"><a routerLink="/auth" class="nav-link">Authenticate</a></li>
+      <li class="nav-link header-controls" routerLinkActive="active"><a routerLink="/shopping-list" class="nav-link">Shopping List</a>
       </li>
     </ul>
     <div *ngIf="isDataSaving">
       <app-loading-spinner-progressbar></app-loading-spinner-progressbar>
     </div>
     <div class="nav navbar-nav" *ngIf="!isDataSaving">
-      <div *ngIf="isAuthenticated">
+      <div class="header-controls" *ngIf="isAuthenticated">
         <a class="nav-link" (click)="onLogOut()">Logout</a>
       </div>
-      <div class="nav-item dropdown" appDropdown *ngIf="isAuthenticated">
+      <div class="nav-item dropdown header-controls" appDropdown *ngIf="isAuthenticated">
         <a class="nav-link dropdown-toggle" id="header-dropdown"
            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
            role="button"

@@ -1,13 +1,25 @@
-.values-row{
+.shopping-edit__container{
   margin-top: 20px
 }
 .controls-row{
-  width: 50%;
   margin-top: 20px;
   display: flex;
   flex-direction: row;
   button{
     width: fit-content;
     margin: 0 0.75rem;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .shopping-edit__container{
+    margin-top: 0;
+  }
+  .controls-row{
+    margin-top: 20px;
+    width: 100%;
+    button{
+      margin: 0 0.5rem;
+    }
   }
 }
