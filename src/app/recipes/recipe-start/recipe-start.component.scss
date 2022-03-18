@@ -1,0 +1,10 @@
+.recipe-start__container {
+  display: flex;
+  justify-content: center
+}
+
+@media screen and (max-width: 560px) {
+  .recipe-start__container{
+    margin-top: 20px;
+  }
+}
