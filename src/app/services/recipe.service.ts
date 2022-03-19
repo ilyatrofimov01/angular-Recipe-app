@@ -2,24 +2,39 @@ import { Injectable } from "@angular/core";
 import { Recipe } from "../recipes/recipe.model";
 import { Ingredient } from "../shared/ingredient.model";
 import ShoppingListService from "./shopping-list.service";
-import { Subject } from "rxjs";
+import { catchError, map, Subject, tap } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../environments/environment";
 
 @Injectable()
 export default class RecipeService {
-  recipesListChanges = new Subject<Recipe[]>();
 
+  recipesListChanges = new Subject<Recipe[]>();
   private recipes: Recipe[] = [];
 
-  constructor(private shoppingListService: ShoppingListService) {
-  }
-
-  setRecipes(recipes: Recipe[]) {
-    this.recipes = recipes;
-    this.recipesListChanges.next(this.recipes.slice());
+  constructor(private http: HttpClient, private shoppingListService: ShoppingListService) {
   }
 
   getAllRecipes() {
-    return this.recipes.slice();
+    return this.http.get(`${environment.firebaseUrl}/recipes-list.json`)
+      .pipe(map(recipes => {
+          const arrayRecipes = [];
+          for (let key in recipes) {
+            arrayRecipes.push(recipes[key]);
+          }
+          return arrayRecipes.map(recipe => {
+            return {...recipe, ingredients: recipe.ingredients ? recipe.ingredients : []};
+          });
+        }),
+        tap(fetchedRecipes => {
+          console.log("inTapRecipes", fetchedRecipes);
+          this.recipes = fetchedRecipes;
+          this.recipesListChanges.next(fetchedRecipes);
+        }),
+        catchError(error => {
+          console.log("Something went wrong", error);
+          return [];
+        }));
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
@@ -27,25 +42,42 @@ export default class RecipeService {
   }
 
   getRecipeById(id: number) {
+    return this.http.get<Recipe>(`${environment.firebaseUrl}/recipes-list/${id}.json`).pipe(map(recipe => {
+        if (!recipe.ingredients) {
+          return {...recipe, ingredients: []};
+        }
+        return recipe;
+      }),
+      catchError(error => {
+        console.log("Something went wrong", error);
+        return null;
+      })
+    );
+  }
+
+  getLocalRecipeById(id: number) {
     return this.recipes.find(recipe => recipe.id === id);
   }
 
   editRecipeById(id: number, newRecipe: Recipe) {
-    const idx = this.recipes.findIndex(el => el.id === id);
-    if (idx != -1) {
-      this.recipes[idx] = newRecipe;
-    }
+    return this.http.put(`${environment.firebaseUrl}/recipes-list/${id}.json`, newRecipe).pipe(
+      catchError(error => {
+        console.log("Something went wrong", error);
+        return null;
+      })
+    );
   }
 
   addNewRecipe(newRecipe: Recipe) {
-    this.recipes.push(newRecipe);
-    this.recipesListChanges.next(this.recipes.slice());
+    return this.editRecipeById(newRecipe.id, newRecipe);
   }
 
   deleteRecipeById(id: number) {
-    const idx = this.recipes.findIndex(recipe => recipe.id === id);
-    this.recipes.splice(idx, 1);
-    this.recipesListChanges.next(this.recipes.slice());
+    return this.http.delete(`${environment.firebaseUrl}/recipes-list/${id}.json`).pipe(
+      catchError(error => {
+        console.log("Something went wrong", error);
+        return null;
+      }));
   }
 
 }

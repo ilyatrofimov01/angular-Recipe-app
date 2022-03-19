@@ -11,4 +11,7 @@
         [recipe]="recipeEl"
       ></app-recipe-item>
   </div>
+  <div *ngIf="recipes.length === 0">
+    <h4>No recipes added</h4>
+  </div>
 </div>

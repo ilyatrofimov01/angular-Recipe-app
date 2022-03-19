@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { DataStorageService } from "../services/data-storage.service";
 import { Subscription } from "rxjs";
 import { AuthService } from "../services/auth.service";
-import { Router } from "@angular/router";
+import RecipeService from "../services/recipe.service";
 
 @Component({
   selector: "app-header",
@@ -11,47 +10,32 @@ import { Router } from "@angular/router";
 })
 
 export class HeaderComponent implements OnInit, OnDestroy {
-  userSubscription: Subscription
+  userSubscription: Subscription;
   saveSubscription: Subscription;
-
   isAuthenticated: boolean = false;
   isDataSaving: boolean = false;
   isError: boolean = false;
 
-  constructor(private dataStorageService: DataStorageService, private authService: AuthService) {
+  constructor(private authService: AuthService, private recipeService: RecipeService) {
   }
 
   ngOnInit() {
     this.userSubscription = this.authService.user.subscribe(user => {
-      this.isAuthenticated = !!user
-    })
+      this.isAuthenticated = !!user;
+    });
   }
 
-  onLogOut(){
-    this.authService.logOut()
-  }
-  onSaveData() {
-    this.isDataSaving = true;
-    this.saveSubscription = this.dataStorageService.storeRecipes().subscribe({
-        next: (requestResponse) => {
-          this.isDataSaving = false;
-          console.log("Data Saved", requestResponse);
-        },
-        error: (error) => {
-          this.isError = true;
-          console.log("Something went wrong Error: ", error);
-        }
-      }
-    );
+  onLogOut() {
+    this.authService.logOut();
   }
 
   onFetchRecipes() {
-    this.dataStorageService.fetchRecipes().subscribe();
+    this.recipeService.getAllRecipes().subscribe();
   }
 
   ngOnDestroy() {
     this.isError = false;
-    this.userSubscription.unsubscribe()
+    this.userSubscription.unsubscribe();
     this.saveSubscription.unsubscribe();
   }
 }

@@ -38,7 +38,7 @@ export class RecipeEditComponent implements OnInit {
     let recipeDescription = "";
     let ingredientsList = new FormArray([]);
     if (this.editMode) {
-      const editedRecipe: Recipe = this.recipeService.getRecipeById(this.id);
+      const editedRecipe: Recipe = this.recipeService.getLocalRecipeById(this.id);
       recipeName = editedRecipe.name;
       recipeDescription = editedRecipe.description;
       imagePath = editedRecipe.imagePath;
@@ -70,31 +70,35 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSubmitForm() {
-
     const formValues = this.recipeForm.value;
-
     if (this.editMode) {
       const newRecipe = new Recipe(
         this.id, formValues.name, formValues.description, formValues.imagePath, formValues.ingredients
       );
-      this.recipeService.editRecipeById(this.id, newRecipe);
+      this.recipeService.editRecipeById(this.id, newRecipe).subscribe(() => {
+        this.recipeService.getAllRecipes();
+        this.onCancel();
+      });
     } else {
       const newRecipeId = new Date().valueOf();
       const newRecipe = new Recipe(
         newRecipeId, formValues.name, formValues.description, formValues.imagePath, formValues.ingredients
       );
-      this.recipeService.addNewRecipe(newRecipe);
+      this.recipeService.addNewRecipe(newRecipe).subscribe(() => {
+          this.recipeService.getAllRecipes().subscribe();
+          this.onCancel();
+        }
+      );
     }
-    this.onCancel();
   }
 
-  onDeleteIngredient(index: number){
-    (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
+  onDeleteIngredient(index: number) {
+    (<FormArray>this.recipeForm.get("ingredients")).removeAt(index);
   }
 
   onCancel() {
-      this.recipeForm.reset();
-      this.router.navigate(["../"], {relativeTo: this.route});
+    this.recipeForm.reset();
+    this.router.navigate(["../"], {relativeTo: this.route});
   }
 
 }

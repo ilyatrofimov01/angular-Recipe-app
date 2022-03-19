@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnDestroy, OnInit } from "@angular/core";
 import { Recipe } from "../recipe.model";
 import RecipeService from "../../services/recipe.service";
 import { ActivatedRoute, Params, Router } from "@angular/router";
@@ -13,20 +13,22 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
   recipe: Recipe;
   recipeId: number;
-  recipesSub: Subscription;
+  idUpdated = new EventEmitter<number>();
+  gettingRecipeSub: Subscription;
 
-  constructor(private recipeService: RecipeService, private router: Router, private route: ActivatedRoute) {
+  constructor(private recipeService: RecipeService,
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.recipesSub = this.recipeService.recipesListChanges.subscribe(() => this.recipe = this.recipeService.getRecipeById(this.recipeId));
-    // upper line - solution to fix the bug:when we opened exactly recipe details and reload page, page reloads without data, because we get
-    // empty recipes array (in recipe.service) previously then data from Api loaded and we should get recipe details again, when we receive
-    // data from back-end so there will be perfect solution to get recipe details by id from back-end endpoint, but i use firebase and can
-    // get just all Recipes Array
+    this.idUpdated.subscribe(id => {
+      this.gettingRecipeSub = this.recipeService.getRecipeById(id)
+        .subscribe((recipe: Recipe | null) => recipe !== null ? this.recipe = recipe : null);
+    });
     this.route.params.subscribe((params: Params) => {
       this.recipeId = +params.id;
-      this.recipe = this.recipeService.getRecipeById(+params.id);
+      this.idUpdated.emit(+params.id);
     });
   }
 
@@ -39,11 +41,11 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   onDeleteRecipe() {
-    this.recipeService.deleteRecipeById(this.recipeId);
+    this.recipeService.deleteRecipeById(this.recipeId).subscribe(() => this.recipeService.getAllRecipes().subscribe());
     this.router.navigate(["/"]);
   }
 
   ngOnDestroy() {
-    this.recipesSub.unsubscribe();
+    this.gettingRecipeSub.unsubscribe();
   }
 }
