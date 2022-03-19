@@ -3,7 +3,11 @@
     cursor: pointer;
   }
 }
-
+.title__container{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
 .navbar__container {
   display: flex;
   justify-content: space-between;

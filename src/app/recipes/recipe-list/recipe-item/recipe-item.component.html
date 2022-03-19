@@ -1,18 +1,21 @@
 <div
-   class="list-group-item card-body recipe-card"
-   [routerLink]= "[recipe.id]"
-   routerLinkActive="active"
+  class="list-group-item card-body recipe-card"
+  [routerLink]="[recipe.id]"
+  routerLinkActive="active"
 >
-  <div>
+  <div class="row-card__text__container">
     <h4 class="card-title">
-      {{recipe.name !== "BBQ"? (recipe.name | titlecase) : recipe.name}}
+      {{recipe.name !== "BBQ" ? (recipe.name | titlecase) : recipe.name}}
     </h4>
     <p class="card-text">{{recipe.description | shortDescription:50 }}</p>
   </div>
-  <span>
-    <img [src]="recipe.imagePath"
-         alt="{{recipe.name}}"
-         class=" card-img" />
-  </span>
+
+  <div class="row-card__img__container">
+    <span>
+      <img [src]="recipe.imagePath"
+           alt="{{recipe.name}}"
+           class=" card-img" />
+    </span>
+  </div>
 </div>
 

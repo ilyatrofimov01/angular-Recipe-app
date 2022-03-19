@@ -30,7 +30,7 @@ export class AuthService {
 
 
   signUp(credentials: AuthCredential) {
-    return this.http.post<AuthResponseData>(`${environment.firebaseUrl}:signUp?key=${this.apiKey}`, {
+    return this.http.post<AuthResponseData>(`${environment.firebaseAuthUrl}:signUp?key=${this.apiKey}`, {
       ...credentials,
       returnSecureToken: true
     }).pipe(catchError(this.errorHandler), tap(resData => {
@@ -39,7 +39,7 @@ export class AuthService {
   }
 
   signIn(credentials: AuthCredential) {
-    return this.http.post<AuthResponseData>(`${environment.firebaseUrl}:signInWithPassword?key=${this.apiKey}`, {
+    return this.http.post<AuthResponseData>(`${environment.firebaseAuthUrl}:signInWithPassword?key=${this.apiKey}`, {
       ...credentials, returnSecureToken: true
     }).pipe(catchError(this.errorHandler), tap(resData => {
       this.handleAuthenticated(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
