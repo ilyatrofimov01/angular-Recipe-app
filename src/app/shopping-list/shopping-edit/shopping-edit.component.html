@@ -27,11 +27,23 @@
             pattern="^[1-9]+[0-9]*$"
           >
         </div>
+        <div class="col-sm-2 form-group">
+          <label for="unit">Unit</label>
+          <select
+            name="unit"
+            id="unit"
+            class="form-control"
+           ngModel
+            required
+          >
+            <option *ngFor="let unit of unitListOptions" value="{{unit.value}}">{{unit.label}}</option>
+          </select>
+        </div>
       </div>
       <div class="row controls-row">
-          <button class="btn btn-success" type="submit" [disabled]="!f.valid">{{ editMode? "Update" : "Add"}}</button>
-          <button class="btn btn-danger" *ngIf="editMode" type="button" (click)="onDelete()">Delete Item</button>
-          <button class="btn btn-primary" type="button" (click)="onClearForm()">Clear Form</button>
+        <button class="btn btn-success" type="submit" [disabled]="!f.valid">{{ editMode ? "Update" : "Add"}}</button>
+        <button class="btn btn-danger" *ngIf="editMode" type="button" (click)="onDelete()">Delete Item</button>
+        <button class="btn btn-primary" type="button" (click)="onClearForm()">Clear Form</button>
       </div>
     </form>
   </div>

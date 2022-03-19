@@ -6,7 +6,7 @@
 .title__container{
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  width: fit-content;
 }
 .navbar__container {
   display: flex;
@@ -47,5 +47,8 @@
   }
   a.nav-link{
     padding: 0.5rem;
+  }
+  .title__container{
+    width: 100%;
   }
 }

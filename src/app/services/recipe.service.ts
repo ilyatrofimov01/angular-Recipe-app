@@ -10,14 +10,14 @@ import { environment } from "../../environments/environment";
 export default class RecipeService {
 
   recipesListChanges = new Subject<Recipe[]>();
-  isLoading = new BehaviorSubject<boolean>(false)
+  isLoading = new BehaviorSubject<boolean>(false);
   private recipes: Recipe[] = [];
 
   constructor(private http: HttpClient, private shoppingListService: ShoppingListService) {
   }
 
   getAllRecipes() {
-    this.isLoading.next(true)
+    this.isLoading.next(true);
     return this.http.get(`${environment.firebaseUrl}/recipes-list.json`)
       .pipe(map(recipes => {
           const arrayRecipes = [];
@@ -31,12 +31,12 @@ export default class RecipeService {
         tap(fetchedRecipes => {
           this.recipes = fetchedRecipes;
           this.recipesListChanges.next(fetchedRecipes);
-          this.isLoading.next(false)
+          this.isLoading.next(false);
 
         }),
         catchError(error => {
           console.log("Something went wrong", error);
-          this.isLoading.next(true)
+          this.isLoading.next(true);
           return [];
 
         }));
@@ -47,12 +47,12 @@ export default class RecipeService {
   }
 
   getRecipeById(id: number) {
-    this.isLoading.next(true)
+    this.isLoading.next(true);
     return this.http.get<Recipe>(`${environment.firebaseUrl}/recipes-list/${id}.json`).pipe(map(recipe => {
         if (!recipe.ingredients) {
           return {...recipe, ingredients: []};
         }
-        this.isLoading.next(false)
+        this.isLoading.next(false);
         return recipe;
       }),
       catchError(error => {
@@ -67,9 +67,9 @@ export default class RecipeService {
   }
 
   editRecipeById(id: number, newRecipe: Recipe) {
-    this.isLoading.next(true)
+    this.isLoading.next(true);
     return this.http.put(`${environment.firebaseUrl}/recipes-list/${id}.json`, newRecipe).pipe(
-      tap(()=>    this.isLoading.next(false)),
+      tap(() => this.isLoading.next(false)),
       catchError(error => {
         console.log("Something went wrong", error);
         return null;
@@ -82,9 +82,9 @@ export default class RecipeService {
   }
 
   deleteRecipeById(id: number) {
-    this.isLoading.next(true)
+    this.isLoading.next(true);
     return this.http.delete(`${environment.firebaseUrl}/recipes-list/${id}.json`).pipe(
-      tap(()=>    this.isLoading.next(false)),
+      tap(() => this.isLoading.next(false)),
       catchError(error => {
         console.log("Something went wrong", error);
         return null;
