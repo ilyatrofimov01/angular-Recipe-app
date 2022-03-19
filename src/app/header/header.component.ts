@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 import { AuthService } from "../services/auth.service";
 import RecipeService from "../services/recipe.service";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 @Component({
   selector: "app-header",
@@ -15,11 +16,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean = false;
   isError: boolean = false;
   isLoading: boolean = false;
+  isMobileDevice: boolean
 
-  constructor(private authService: AuthService, private recipeService: RecipeService) {
+  constructor(private authService: AuthService, private recipeService: RecipeService, private deviceDetectorService: DeviceDetectorService) {
   }
 
   ngOnInit() {
+    this.isMobileDevice = this.deviceDetectorService.deviceType === "mobile"
     this.loadingSubscription = this.recipeService.isLoading.subscribe((isLoading) => this.isLoading = isLoading);
     this.userSubscription = this.authService.user.subscribe(user => {
       this.isAuthenticated = !!user;
