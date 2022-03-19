@@ -11,15 +11,16 @@ import RecipeService from "../services/recipe.service";
 
 export class HeaderComponent implements OnInit, OnDestroy {
   userSubscription: Subscription;
-  saveSubscription: Subscription;
+  loadingSubscription: Subscription;
   isAuthenticated: boolean = false;
-  isDataSaving: boolean = false;
   isError: boolean = false;
+  isLoading: boolean = false;
 
   constructor(private authService: AuthService, private recipeService: RecipeService) {
   }
 
   ngOnInit() {
+    this.loadingSubscription = this.recipeService.isLoading.subscribe((isLoading) => this.isLoading = isLoading);
     this.userSubscription = this.authService.user.subscribe(user => {
       this.isAuthenticated = !!user;
     });
@@ -36,7 +37,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.isError = false;
     this.userSubscription.unsubscribe();
-    this.saveSubscription.unsubscribe();
+    this.loadingSubscription.unsubscribe();
   }
 }
 
