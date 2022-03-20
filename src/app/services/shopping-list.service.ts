@@ -1,42 +1,75 @@
 import { Ingredient } from "../shared/ingredient.model";
-import { catchError, map, Subject, tap } from "rxjs";
+import { BehaviorSubject, catchError, map, Subject, tap } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
 
 
-@Injectable({providedIn:"root"})
+@Injectable({providedIn: "root"})
 export default class ShoppingListService {
-  startedEditing = new Subject();
-  ingredientsChanged = new Subject<Ingredient[]>();
+  startedEditing = new Subject<number>();
+  ingredientsChanged = new BehaviorSubject<Ingredient[]>([]);
+  isLoading = new BehaviorSubject<boolean>(false);
 
   private ingredients = [];
 
   constructor(private http: HttpClient) {
   }
+
+  setLoading(loading: boolean) {
+    return this.isLoading.next(loading);
+  }
+
   getAllIngredients() {
+    this.setLoading(true);
     return this.http.get<Ingredient[]>(`${environment.firebaseUrl}/shopping-list.json`).pipe(
-      map((shoppingListObj)=>{
+      map((shoppingListObj) => {
         const shoppingListAsArray = [];
-        for(let key in shoppingListObj){
-          shoppingListAsArray.push(shoppingListObj[key])
+        for (let key in shoppingListObj) {
+          shoppingListAsArray.push(shoppingListObj[key]);
         }
         return shoppingListAsArray;
       }),
-      tap((shoppingList:Ingredient[]) => this.ingredients = shoppingList),
+      tap((shoppingList: Ingredient[]) => {
+        this.ingredientsChanged.next(shoppingList);
+        this.setLoading(false);
+      }),
       catchError((err) => {
-        console.log("Something went wrong", err)
-        return []
+        console.log("Something went wrong", err);
+        this.setLoading(false);
+        return [];
       })
-    )
+    );
   }
 
-  getIngredientByIndex(index: number) {
-    return this.ingredients[index];
+  getIngredientById(id: number) {
+    this.setLoading(true);
+    return this.http.get<Ingredient>(`${environment.firebaseUrl}/shopping-list/${id}.json`).pipe(
+      tap(() => this.setLoading(false))
+    );
   }
 
   addIngredient(ingredient: Ingredient) {
-    return this.http.put(`${environment.firebaseUrl}/shopping-list/${ingredient.id}.json`,ingredient)
+    this.setLoading(true);
+
+    const compareExistIngredient = (ing) => ing.name === ingredient.name && ing.unit === ingredient.unit;
+
+    const existIngredient = this.ingredientsChanged.getValue().find(compareExistIngredient);
+
+    const newIngredient = existIngredient ? {
+      ...existIngredient,
+      amount: ingredient.amount + existIngredient.amount
+    } : ingredient;
+
+    return this.http.put(`${environment.firebaseUrl}/shopping-list/${existIngredient ? existIngredient.id : ingredient.id}.json`, newIngredient)
+      .pipe(
+        tap(() => this.setLoading(false)),
+        catchError((error) => {
+          console.log("Something went wrong", error);
+          this.setLoading(false);
+          return null;
+        })
+      );
   }
 
   addIngredients(ingredients: Ingredient[]) {
@@ -48,19 +81,24 @@ export default class ShoppingListService {
     this.ingredientsChanged.next(this.ingredients.slice());
   }
 
-  updateIngredient(index: number, newIngredient: Ingredient) {
-    this.ingredients[index] = newIngredient;
-    this.ingredientsChanged.next(this.ingredients.slice());
+  updateIngredient(id: number, newIngredient: Ingredient) {
+    this.setLoading(true);
+    return this.http.put(`${environment.firebaseUrl}/shopping-list/${id}.json`, newIngredient).pipe(
+      tap(() => this.setLoading(false)),
+      catchError((err) => {
+        console.log("Something went wrong", err);
+        return null;
+      })
+    );
   }
 
-  deleteIngredient(index: number) {
-    this.ingredients.splice(index, 1);
-    this.ingredientsChanged.next(this.ingredients);
-  }
-
-  saveIngredients(){
-    const modifiedIngredients =  this.ingredients
-    return this.http.put<Ingredient[]>(`${environment.firebaseUrl}/shopping-list.json`,modifiedIngredients).pipe
-
+  deleteIngredient(id: number) {
+    return this.http.delete(`${environment.firebaseUrl}/shopping-list/${id}.json`).pipe(
+      tap(() => this.setLoading(false)),
+      catchError((err) => {
+        console.log("Something went Wrong", err);
+        return null;
+      })
+    );
   }
 }
