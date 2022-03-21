@@ -47,7 +47,8 @@ export default class RecipeService {
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
-    this.shoppingListService.addIngredients(ingredients);
+    console.log(ingredients)
+   // this.shoppingListService.addIngredients(ingredients);
   }
 
   getRecipeById(id: number) {

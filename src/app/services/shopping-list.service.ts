@@ -20,6 +20,12 @@ export default class ShoppingListService {
     return this.isLoading.next(loading);
   }
 
+  ingredientsArrayToObject(ingredients: Ingredient[]) {
+    const ingredientsObj = {};
+    ingredients.forEach(ingredient => ingredientsObj[ingredient.id] = ingredient);
+    return ingredientsObj;
+  }
+
   getAllIngredients() {
     this.setLoading(true);
     return this.http.get<Ingredient[]>(`${environment.firebaseUrl}/shopping-list.json`).pipe(
@@ -70,6 +76,34 @@ export default class ShoppingListService {
           return null;
         })
       );
+  }
+
+  addRecipeIngredients(newIngredients: Ingredient[], remoteIngredients: Ingredient[]) {
+    this.setLoading(true);
+    const newIngredientsToAdd = {};
+    const foundInRemote = {};
+    let notChangedRemoteIngredients = remoteIngredients;
+
+    newIngredients.forEach(newIngredient => {
+      const inRemote = (remoteIngredients.find(remoteIngredient => remoteIngredient.name === newIngredient.name));
+      if (inRemote) {
+        foundInRemote[inRemote.id] = {...inRemote, amount: inRemote.amount + newIngredient.amount};
+        notChangedRemoteIngredients = notChangedRemoteIngredients.filter(el => el.id !== inRemote.id);
+      } else {
+        const newIngredientId = new Date().valueOf() + Math.floor(Math.random() * 100);
+        newIngredientsToAdd[newIngredientId] = {...newIngredient, id: newIngredientId};
+      }
+    });
+    const notChangedToSend = this.ingredientsArrayToObject(notChangedRemoteIngredients);
+    return this.http.put(`${environment.firebaseUrl}/shopping-list.json`,
+      {...foundInRemote, ...newIngredientsToAdd, ...notChangedToSend}).pipe(
+      tap(() => this.setLoading(false)),
+      catchError((err) => {
+        console.log("Something went wrong", err);
+        this.setLoading(false);
+        return null;
+      })
+    );
   }
 
   addIngredients(ingredients: Ingredient[]) {
