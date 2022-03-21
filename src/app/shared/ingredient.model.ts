@@ -2,7 +2,7 @@ export class Ingredient {
   public id?: number;
   public name: string;
   public amount: number;
-  public unit?: string;
+  public unit: string;
 
   constructor(name: string, amount: number, id: number, unit: string) {
     this.id = id;

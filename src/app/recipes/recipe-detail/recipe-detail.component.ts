@@ -3,6 +3,9 @@ import { Recipe } from "../recipe.model";
 import RecipeService from "../../services/recipe.service";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Subscription } from "rxjs";
+import { findUnitLabel } from "../../enums/units";
+import ShoppingListService from "../../services/shopping-list.service";
+import { Ingredient } from "../../shared/ingredient.model";
 
 @Component({
   selector: "app-recipe-detail",
@@ -13,10 +16,12 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
   recipe: Recipe;
   recipeId: number;
+  templateFindUnitLabel = findUnitLabel
   idUpdated = new EventEmitter<number>();
   gettingRecipeSub: Subscription;
 
   constructor(private recipeService: RecipeService,
+              private shoppingService: ShoppingListService,
               private router: Router,
               private route: ActivatedRoute) {
   }
@@ -37,7 +42,9 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   onAddToShoppingList() {
-    this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
+      this.shoppingService.getAllIngredients().subscribe((remoteIngredients: Ingredient[]) => {
+        this.shoppingService.addRecipeIngredients(this.recipe.ingredients, remoteIngredients).subscribe()
+      })
   }
 
   onDeleteRecipe() {

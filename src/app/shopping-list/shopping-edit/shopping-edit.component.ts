@@ -3,6 +3,7 @@ import { Ingredient } from "../../shared/ingredient.model";
 import ShoppingListService from "../../services/shopping-list.service";
 import { NgForm } from "@angular/forms";
 import { Subscription } from "rxjs";
+import { Unit, unitList } from "../../enums/units";
 
 @Component({
   selector: "app-shopping-edit",
@@ -17,14 +18,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   editMode: boolean = false;
   editedItemId: number;
 
-  unitListOptions: { label: string, value: string }[] = [
-    {label: "g", value: "g"},
-    {label: "Kg", value: "kg"},
-    {label: "Spoon", value: "spoon"},
-    {label: "Tea Spoon", value: "teaSpoon"},
-    {label: "Cup", value: "cup"},
-    {label: "pcs", value: "pcs"}
-  ];
+  unitListOptions: Unit[] = unitList;
 
   constructor(private shoppingListService: ShoppingListService) {
   }
@@ -40,7 +34,6 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
           unit: ingredient.unit
         });
       });
-
     });
   }
 

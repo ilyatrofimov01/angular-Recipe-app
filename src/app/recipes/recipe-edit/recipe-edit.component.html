@@ -62,24 +62,40 @@
     </div>
 
     <div formArrayName="ingredients">
-      <div class="row ingredients-list" *ngFor=" let ingredientCtrl of ingredientsFormControls let i = index"
+
+      <div class="add-new-form__container">
+        <button class="btn btn-primary" type="button" (click)="onAddIngredientForm()">Add New Ingredient</button>
+      </div>
+
+      <hr *ngIf="ingredientsFormControls.length > 0">
+
+      <div class=" ingredients-list" *ngFor=" let ingredientCtrl of ingredientsFormControls let i = index"
            [formGroupName]="i">
         <div class="ingredients-list__name">
-          <input type="text" class="form-control name" formControlName="name">
+          <label for="name">Ingredient Name:</label>
+          <input id="name" type="text" class="form-control name" formControlName="name">
         </div>
         <div class="ingredients-list__amount">
-          <input type="number" class="form-control amount" formControlName="amount">
+          <label for="amount">Amount:</label>
+          <input type="number" id="amount" class="form-control amount" formControlName="amount">
         </div>
-        <div class="ingredients-list__button">
-          <Button class="btn btn-danger" (click)="onDeleteIngredient(i)"> Delete</Button>
+        <div class="ingredients-list__unit">
+          <label for="unit">Unit:</label>
+          <select
+            name="unit"
+            id="unit"
+            class="form-control"
+            required
+            formControlName="unit"
+          >
+            <option value="null">Select Unit</option>
+            <option *ngFor="let unit of unitListOptions" value="{{unit.value}}">{{unit.label}}</option>
+          </select>
         </div>
-      </div>
-      <div class="row" style="margin-top: 20px">
-        <hr>
-        <button class="btn btn-success" type="button" (click)="onAddIngredient()"> Add New</button>
+        <div class="ingredients-list__del-button">
+          <Button class="btn btn-danger" (click)="onDeleteIngredient(i)">Delete</Button>
+        </div>
       </div>
     </div>
-
-
   </form>
 </div>

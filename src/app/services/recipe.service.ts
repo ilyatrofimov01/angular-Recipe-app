@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { Recipe } from "../recipes/recipe.model";
-import { Ingredient } from "../shared/ingredient.model";
 import ShoppingListService from "./shopping-list.service";
 import { BehaviorSubject, catchError, map, Subject, tap } from "rxjs";
 import { HttpClient } from "@angular/common/http";
@@ -13,7 +12,7 @@ export default class RecipeService {
   isLoading = new BehaviorSubject<boolean>(false);
   private recipes: Recipe[] = [];
 
-  constructor(private http: HttpClient, private shoppingListService: ShoppingListService) {
+  constructor(private http: HttpClient) {
   }
 
   setLoading(loading: boolean) {
@@ -46,14 +45,11 @@ export default class RecipeService {
         }));
   }
 
-  addIngredientsToShoppingList(ingredients: Ingredient[]) {
-    this.shoppingListService.addIngredients(ingredients);
-  }
-
   getRecipeById(id: number) {
     this.setLoading(true);
     return this.http.get<Recipe>(`${environment.firebaseUrl}/recipes-list/${id}.json`).pipe(map(recipe => {
         if (!recipe.ingredients) {
+          this.setLoading(false);
           return {...recipe, ingredients: []};
         }
         this.setLoading(false);

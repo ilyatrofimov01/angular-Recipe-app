@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Ingredient } from "../shared/ingredient.model";
 import ShoppingListService from "../services/shopping-list.service";
 import { Subscription } from "rxjs";
+import { findUnitLabel } from "../enums/units";
 
 @Component({
   selector: "app-shopping-list",
@@ -11,6 +12,7 @@ import { Subscription } from "rxjs";
 export class ShoppingListComponent implements OnInit, OnDestroy {
 
   ingredients: Ingredient[] = [];
+  findUnitLabelTemplate = findUnitLabel
   private igChangeSub: Subscription;
 
   constructor(private shoppingListService: ShoppingListService) {
