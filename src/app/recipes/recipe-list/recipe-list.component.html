@@ -1,15 +1,24 @@
-<div class="row">
-  <div class="col-xs-12">
-    <button (click)="onNewRecipe()" class="btn btn-success">New Recipe</button>
+<div class="controls__container">
+  <div>
+    <button (click)="onNewRecipe()" class="btn btn-primary">{{this.isMobileDevice ? "New" : "New Recipe"}}</button>
+  </div>
+  <div class="search-form">
+    <input class="form-control"
+           type="text"
+           placeholder="Search here"
+           #search
+           (input)="onSearch(search.value)"
+    >
+    <button type="button" class="btn btn-outline-primary" (click)="onSearchClear()">Clear</button>
   </div>
 </div>
 <hr>
 <div class="row recipe-list__container">
   <div class="col-xs-12"
-     *ngFor="let recipeEl of recipes">
-      <app-recipe-item
-        [recipe]="recipeEl"
-      ></app-recipe-item>
+       *ngFor="let recipeEl of recipes">
+    <app-recipe-item
+      [recipe]="recipeEl"
+    ></app-recipe-item>
   </div>
   <div *ngIf="recipes.length === 0">
     <h4>No recipes added</h4>

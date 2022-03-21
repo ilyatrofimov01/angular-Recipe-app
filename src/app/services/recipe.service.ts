@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { Recipe } from "../recipes/recipe.model";
-import { Ingredient } from "../shared/ingredient.model";
 import ShoppingListService from "./shopping-list.service";
 import { BehaviorSubject, catchError, map, Subject, tap } from "rxjs";
 import { HttpClient } from "@angular/common/http";
@@ -13,7 +12,7 @@ export default class RecipeService {
   isLoading = new BehaviorSubject<boolean>(false);
   private recipes: Recipe[] = [];
 
-  constructor(private http: HttpClient, private shoppingListService: ShoppingListService) {
+  constructor(private http: HttpClient) {
   }
 
   setLoading(loading: boolean) {
@@ -44,11 +43,6 @@ export default class RecipeService {
           return [];
 
         }));
-  }
-
-  addIngredientsToShoppingList(ingredients: Ingredient[]) {
-    console.log(ingredients)
-   // this.shoppingListService.addIngredients(ingredients);
   }
 
   getRecipeById(id: number) {

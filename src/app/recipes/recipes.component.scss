@@ -1,0 +1,28 @@
+.columns-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.column-container {
+  margin-top: 20px;
+  padding: 0 0.75rem;
+  &__recipes-list {
+    width: 40%;
+  }
+
+  &__recipe-details {
+    width: 60%;
+  }
+
+}
+
+@media screen and (max-width: 560px) {
+  .columns-container{
+    flex-direction: column;
+  }
+  .column-container {
+    width: 100%;
+  }
+}

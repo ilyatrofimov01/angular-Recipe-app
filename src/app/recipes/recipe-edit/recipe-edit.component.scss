@@ -29,6 +29,10 @@
   justify-content: space-between;
   margin-top: 20px;
 
+  div {
+    padding: 0 0.75rem;
+  }
+
   &__name {
     width: 50%;
   }
@@ -84,5 +88,32 @@ input, textarea {
     justify-content: flex-end;
     align-items: center;
     margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 560px){
+
+  .edit-recipe__container{
+    padding: 40px 0;
+  }
+
+  .ingredients-list {
+    div {
+      padding: 0 0.25rem;
+    }
+    &__name {
+      width: 47%;
+    }
+
+    &__amount {
+      width: 18%;
+    }
+
+    &__unit {
+      width: 20%;
+    }
+    &__del-button {
+      width: 25%;
+    }
   }
 }

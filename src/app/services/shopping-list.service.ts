@@ -106,15 +106,6 @@ export default class ShoppingListService {
     );
   }
 
-  addIngredients(ingredients: Ingredient[]) {
-    for (let ingredient of ingredients) {
-      const foundedIndex = this.ingredients.findIndex(el => el.name === ingredient.name);
-      if (foundedIndex !== -1) this.ingredients[foundedIndex].amount += ingredient.amount;
-      else this.ingredients.push({...ingredient});
-    }
-    this.ingredientsChanged.next(this.ingredients.slice());
-  }
-
   updateIngredient(id: number, newIngredient: Ingredient) {
     this.setLoading(true);
     return this.http.put(`${environment.firebaseUrl}/shopping-list/${id}.json`, newIngredient).pipe(
