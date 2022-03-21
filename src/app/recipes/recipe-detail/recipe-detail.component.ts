@@ -3,6 +3,7 @@ import { Recipe } from "../recipe.model";
 import RecipeService from "../../services/recipe.service";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Subscription } from "rxjs";
+import { findUnitLabel } from "../../enums/units";
 
 @Component({
   selector: "app-recipe-detail",
@@ -13,6 +14,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
   recipe: Recipe;
   recipeId: number;
+  templateFindUnitLabel = findUnitLabel
   idUpdated = new EventEmitter<number>();
   gettingRecipeSub: Subscription;
 

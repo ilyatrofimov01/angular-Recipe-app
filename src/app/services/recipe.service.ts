@@ -54,6 +54,7 @@ export default class RecipeService {
     this.setLoading(true);
     return this.http.get<Recipe>(`${environment.firebaseUrl}/recipes-list/${id}.json`).pipe(map(recipe => {
         if (!recipe.ingredients) {
+          this.setLoading(false);
           return {...recipe, ingredients: []};
         }
         this.setLoading(false);

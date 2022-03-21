@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import RecipeService from "../../services/recipe.service";
 import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Recipe } from "../recipe.model";
+import { Unit, unitList } from "../../enums/units";
 
 @Component({
   selector: "app-recipe-edit",
@@ -15,6 +16,7 @@ export class RecipeEditComponent implements OnInit {
   recipeForm: FormGroup;
   editMode: boolean = false;
   ingredientsFormControls;
+  unitListOptions: Unit[] = unitList
 
   constructor(private route: ActivatedRoute, private recipeService: RecipeService, private router: Router) {
   }
@@ -42,11 +44,12 @@ export class RecipeEditComponent implements OnInit {
       recipeName = editedRecipe.name;
       recipeDescription = editedRecipe.description;
       imagePath = editedRecipe.imagePath;
-      if (editedRecipe.ingredients) {
+      if (editedRecipe.ingredients?.length > 0) {
         for (let ingredient of editedRecipe.ingredients) {
           ingredientsList.push(new FormGroup({
             "name": new FormControl(ingredient.name),
-            "amount": new FormControl(ingredient.amount, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
+            "amount": new FormControl(ingredient.amount, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
+            "unit": new FormControl(ingredient.unit),
           }));
         }
       }
@@ -55,16 +58,17 @@ export class RecipeEditComponent implements OnInit {
       name: new FormControl(recipeName, Validators.required),
       imagePath: new FormControl(imagePath, Validators.required),
       description: new FormControl(recipeDescription, Validators.required),
-      ingredients: ingredientsList
+      ingredients: ingredientsList,
     });
     this.ingredientsFormControls = (this.recipeForm.get("ingredients") as FormArray).controls;
   }
 
-  onAddIngredient() {
+  onAddIngredientForm() {
     (<FormArray>this.recipeForm.get("ingredients")).push(new FormGroup(
       {
         name: new FormControl(null, Validators.required),
-        amount: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
+        amount: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
+        unit: new FormControl(null, Validators.required)
       }
     ));
   }

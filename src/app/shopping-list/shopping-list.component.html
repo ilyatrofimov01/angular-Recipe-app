@@ -7,7 +7,7 @@
            *ngFor="let ingredient of ingredients"
            (click)="onEditItem(ingredient.id)"
       >
-        {{ingredient.name}} ({{ingredient.amount}} - {{ingredient.unit}})
+        {{ingredient.name}} ({{ingredient.amount}} - {{findUnitLabelTemplate(ingredient.unit)}})
       </div>
     </ul>
   </div>

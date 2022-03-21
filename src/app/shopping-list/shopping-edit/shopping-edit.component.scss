@@ -11,6 +11,14 @@
   }
 }
 
+#unit.ng-invalid {
+  &.ng-touched {
+    border-color: red;
+  }
+
+  color: gray;
+}
+
 @media screen and (max-width: 560px) {
   .shopping-edit__container{
     margin-top: 0;

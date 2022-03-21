@@ -33,9 +33,10 @@
             name="unit"
             id="unit"
             class="form-control"
-           ngModel
+           [ngModel] = "null"
             required
           >
+            <option value="null">Select Unit</option>
             <option *ngFor="let unit of unitListOptions" value="{{unit.value}}">{{unit.label}}</option>
           </select>
         </div>
