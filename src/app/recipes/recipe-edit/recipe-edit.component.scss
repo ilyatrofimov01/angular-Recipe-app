@@ -1,3 +1,5 @@
+@import "src/stylesheets/tools/variables";
+
 .edit-recipe {
   &__container {
     display: flex;
@@ -91,9 +93,9 @@ input, textarea {
   }
 }
 
-@media screen and (max-width: 560px){
+@media screen and (max-width: $device-width-mobile) {
 
-  .edit-recipe__container{
+  .edit-recipe__container {
     padding: 40px 0;
   }
 
@@ -101,6 +103,7 @@ input, textarea {
     div {
       padding: 0 0.25rem;
     }
+
     &__name {
       width: 47%;
     }
@@ -112,6 +115,7 @@ input, textarea {
     &__unit {
       width: 20%;
     }
+
     &__del-button {
       width: 25%;
     }

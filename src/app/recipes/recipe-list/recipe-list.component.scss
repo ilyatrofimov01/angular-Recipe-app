@@ -1,32 +1,39 @@
-.recipe-list__container{
+@import "src/stylesheets/tools/variables";
+
+.recipe-list__container {
   display: flex;
   justify-content: center;
   width: 100%;
-  margin:0;
+  margin: 0;
 }
-.controls__container{
+
+.controls__container {
   padding: 0 0.75rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-.search-form{
+
+.search-form {
   display: flex;
   flex-direction: row;
   width: auto;
-  button{
+
+  button {
     margin-left: 0.75rem;
   }
 }
-.cancel-search__container{
+
+.cancel-search__container {
   display: flex;
   justify-content: flex-end;
   width: 100%;
   margin-top: 1rem;
   padding: 0 0.75rem;
 }
-@media screen and (max-width: 560px) {
-  .controls__container{
+
+@media screen and (max-width: $device-width-mobile) {
+  .controls__container {
     padding: 0;
   }
 }

@@ -1,3 +1,5 @@
+@import "src/stylesheets/tools/variables";
+
 .columns-container{
   width: 100%;
   display: flex;
@@ -18,7 +20,7 @@
 
 }
 
-@media screen and (max-width: 560px) {
+@media screen and (max-width: $device-width-mobile) {
   .columns-container{
     flex-direction: column;
   }

@@ -1,3 +1,5 @@
+@import "src/stylesheets/tools/variables";
+
 .navbar {
   a {
     cursor: pointer;
@@ -33,7 +35,7 @@
   padding: 8px;
 }
 
-@media screen and (max-width: 560px) {
+@media screen and (max-width: $device-width-mobile) {
   .navbar__container {
     justify-content: flex-start;
     padding: 0;
