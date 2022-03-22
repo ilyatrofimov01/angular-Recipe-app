@@ -3,11 +3,19 @@
     cursor: pointer;
   }
 }
-.title__container{
+
+.title__container {
   display: flex;
   justify-content: space-between;
   width: fit-content;
+
+  img {
+    max-height: 2rem;
+    vertical-align: bottom;
+    margin-right: 0.25rem;
+  }
 }
+
 .navbar__container {
   display: flex;
   justify-content: space-between;
@@ -40,15 +48,15 @@
       margin-left: 0.5rem;
     }
   }
-  .navbar-nav .dropdown-menu{
+  .navbar-nav .dropdown-menu {
     position: absolute;
     min-width: unset;
     margin-left: -1rem;
   }
-  a.nav-link{
+  a.nav-link {
     padding: 0.5rem;
   }
-  .title__container{
+  .title__container {
     width: 100%;
   }
 }
